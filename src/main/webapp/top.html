@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/datepicker3.css" rel="stylesheet">
+<link href="css/bootstrap-table.css" rel="stylesheet">
+<link href="css/styles.css" rel="stylesheet">
+</head>
+<body>
+	<div class="navbar navbar-inverse navbar-fixed-top" role="">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#"><span>Hotel</span>DWPortal</a>
+				<ul class="user-menu">
+					<li class="dropdown pull-right"><a href="#"
+						class="dropdown-toggle" data-toggle="dropdown"> <span
+							class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;&nbsp;&nbsp;<span
+							id="loginname"> User </span><span class="caret">&nbsp;&nbsp;&nbsp;&nbsp;</span></a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="#"><span
+									class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+						</ul></li>
+				</ul>
+			</div>
+		</div>
+		<!-- /.container-fluid -->
+	</div>
+	<script src="js/jquery-1.11.1.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/easypiechart.js"></script>
+	<script src="js/bootstrap-datepicker.js"></script>
+	<script src="js/bootstrap-table.js"></script>
+	<script src="js/custom.js"></script>
+	<script src="js2/login.js"></script>
+	<script>
+		!function($) {
+			$(document).on(
+							"click",
+							"ul.nav li.parent > a > span.icon",
+							function() {
+								$(this).find('em:first').toggleClass("glyphicon-minus");
+							});
+			$(".sidebar span.icon").find('em:first').addClass("glyphicon-plus");
+		}(window.jQuery);
+
+		$(window).on('resize', function() {
+			if ($(window).width() > 768)
+				$('#sidebar-collapse').collapse('show')
+		})
+		$(window).on('resize', function() {
+			if ($(window).width() <= 767)
+				$('#sidebar-collapse').collapse('hide')
+		})
+	</script>
+</body>
+</html>

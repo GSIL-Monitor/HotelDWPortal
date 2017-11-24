@@ -1,0 +1,183 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+	<display-name>Archetype Created Web Application</display-name>
+
+	<!-- 该过滤器用于实现单点登出功能，可选配置。 -->
+	<filter>
+		<filter-name>CAS Single Sign Out Filter</filter-name>
+		<filter-class>org.jasig.cas.client.session.SingleSignOutFilter</filter-class>
+	</filter>
+
+
+	<!-- 该过滤器负责用户的认证工作，必须启用它 -->
+	<filter>
+		<filter-name>CASFilter</filter-name>
+		<filter-class>org.jasig.cas.client.authentication.AuthenticationFilter</filter-class>
+		<init-param>
+			<param-name>casServerLoginUrl</param-name>
+			<param-value>https://cas.ctripcorp.com/caso/login</param-value>
+			<!--这里的server是服务端的IP -->
+		</init-param>
+		<init-param>
+			<param-name>serverName</param-name>
+			<param-value>http://10.8.161.135:8080</param-value>
+			<!--<param-value>http://localhost:8080</param-value>-->
+		</init-param>
+	</filter>
+
+	<!-- 该过滤器负责对Ticket的校验工作，必须启用它 -->
+	<filter>
+		<filter-name>CAS Validation Filter</filter-name>
+		<filter-class>
+			org.jasig.cas.client.validation.Cas20ProxyReceivingTicketValidationFilter</filter-class>
+		<init-param>
+			<param-name>casServerUrlPrefix</param-name>
+			<param-value>https://cas.ctripcorp.com/caso</param-value>
+		</init-param>
+		<init-param>
+			<param-name>serverName</param-name>
+			<param-value>http://10.8.161.135:8080</param-value>
+			<!--<param-value>http://localhost:8080</param-value>-->
+		</init-param>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+
+	<!-- 该过滤器负责实现HttpServletRequest请求的包裹， 比如允许开发者通过HttpServletRequest的getRemoteUser()方法获得SSO登录用户的登录名，可选配置。 -->
+	<filter>
+		<filter-name>CAS HttpServletRequest Wrapper Filter</filter-name>
+		<filter-class>
+			org.jasig.cas.client.util.HttpServletRequestWrapperFilter</filter-class>
+	</filter>
+
+	<!-- 该过滤器使得开发者可以通过org.jasig.cas.client.util.AssertionHolder来获取用户的登录名。 比如AssertionHolder.getAssertion().getPrincipal().getName()。 -->
+	<filter>
+		<filter-name>CAS Assertion Thread Local Filter</filter-name>
+		<filter-class>org.jasig.cas.client.util.AssertionThreadLocalFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>CAS Single Sign Out Filter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>CASFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>CAS Validation Filter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>CAS HttpServletRequest Wrapper Filter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>CAS Assertion Thread Local Filter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<listener>
+		<listener-class>org.jasig.cas.client.session.SingleSignOutHttpSessionListener</listener-class>
+	</listener>
+
+	<listener>
+		<listener-class>com.ctrip.data.util.DalListener</listener-class>
+	</listener>
+
+	<servlet>
+		<servlet-name>ShardingDBServlet</servlet-name>
+		<display-name>ShardingDBServlet</display-name>
+		<description></description>
+		<servlet-class>com.ctrip.servlet.ShardingDBServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>ShardingTBServlet</servlet-name>
+		<display-name>ShardingTBServlet</display-name>
+		<description></description>
+		<servlet-class>com.ctrip.servlet.ShardingTBServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>ShardingSourceGroupServlet</servlet-name>
+		<display-name>ShardingSourceGroupServlet</display-name>
+		<description></description>
+		<servlet-class>com.ctrip.servlet.ShardingSourceGroupServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>ShardingLoginServlet</servlet-name>
+		<display-name>ShardingLoginServlet</display-name>
+		<description></description>
+		<servlet-class>com.ctrip.servlet.ShardingLoginServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>ShardingUserServlet</servlet-name>
+		<display-name>ShardingUserServlet</display-name>
+		<description></description>
+		<servlet-class>com.ctrip.servlet.ShardingUserServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>DataxTitanDBMappingServlet</servlet-name>
+		<display-name>DataxTitanDBMappingServlet</display-name>
+		<description></description>
+		<servlet-class>com.ctrip.servlet.DataxTitanDBMappingServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>OSGServlet</servlet-name>
+		<display-name>OSGServlet</display-name>
+		<description></description>
+		<servlet-class>com.ctrip.servlet.OSGServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>PubliceDBServlet</servlet-name>
+		<display-name>PubliceDBServlet</display-name>
+		<description></description>
+		<servlet-class>com.ctrip.servlet.PubliceDBServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ShardingDBServlet</servlet-name>
+		<url-pattern>/ShardingDBServlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ShardingTBServlet</servlet-name>
+		<url-pattern>/ShardingTBServlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ShardingSourceGroupServlet</servlet-name>
+		<url-pattern>/ShardingSourceGroupServlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ShardingLoginServlet</servlet-name>
+		<url-pattern>/ShardingLoginServlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ShardingUserServlet</servlet-name>
+		<url-pattern>/ShardingUserServlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>DataxTitanDBMappingServlet</servlet-name>
+		<url-pattern>/DataxTitanDBMappingServlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>OSGServlet</servlet-name>
+		<url-pattern>/OSGServlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>PubliceDBServlet</servlet-name>
+		<url-pattern>/PubliceDBServlet</url-pattern>
+	</servlet-mapping>
+
+
+
+</web-app>
+
+
+

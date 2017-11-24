@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/HotelDWPortal.iml" filepath="$PROJECT_DIR$/HotelDWPortal.iml" />
+      <module fileurl="file://E:/idea-project/datax-web-master-914351280880037a5eeb8c1ca80fd015749d4f6b/datax-web.iml" filepath="E:/idea-project/datax-web-master-914351280880037a5eeb8c1ca80fd015749d4f6b/datax-web.iml" />
+    </modules>
+  </component>
+</project>

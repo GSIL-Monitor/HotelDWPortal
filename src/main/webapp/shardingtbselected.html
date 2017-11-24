@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>HotelDWPortal</title>
+    <link
+            href="http://cdn.bootcss.com/bootstrap-table/1.9.1/bootstrap-table.min.css"
+            rel="stylesheet"/>
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/datepicker3.css" rel="stylesheet">
+    <link href="css/bootstrap-table.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+    <!-- slAjax pageAjax waiting -->
+    <link href="css/processBar.css" rel="stylesheet">
+    <!-- <script type="text/javascript" src="js/jquery-1.9.1.js"></script> -->
+    <script type="text/javascript" src="js/My97DatePicker/WdatePicker.js"></script>
+    <link rel="stylesheet" type="text/css"
+          href="js/My97DatePicker/skin/whyGreen/datepicker.css"/>
+    <!-- select2 -->
+    <link href="js/select2/css/select2.min.css" rel="stylesheet">
+    <script type="text/javascript" src="js/jquery-2.1.0.js"></script>
+    <script type="text/javascript" src="js/select2/js/select2.min.js"></script>
+
+    <script type="text/javascript" src="js/bootstrap-select.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-select.css">
+
+    <script type="text/javascript">
+        $(window).on('load', function () {
+
+            $('.selectpicker').selectpicker({
+                'selectedText': 'cat'
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".js-example-basic-single").select2();
+
+        });
+    </script>
+
+</head>
+
+<body>
+<div class="col-sm-12 col-lg-12 main" id="mainDiv">
+    <div class="row">
+        <ol class="breadcrumb">
+            <li><a href="#"><span class="glyphicon glyphicon-home"></span></a></li>
+            <li class="active">ShardingTB源</li>
+        </ol>
+    </div>
+    <!--/.row-->
+    <div class="row" id="shardingtbAddDiv">
+        <input type="hidden" id="addSourceTBID"/>
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+
+                <div class="panel-heading" id="titleDiv"></div>
+                <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-11 form-inline col-md-offset-0">
+                        <div class="container">
+                            <form class="form-horizontal" role="form">
+                                <div class="form-group">
+                                    <label for="id_select">ShardingTB：</label>
+                                    <select id="id_select" class="selectpicker bla bla bli" multiple
+                                            data-live-search="true">
+                                    </select>
+                                    <button type="button" class="btn btn-primary"
+                                            id="shardingtbViewBtn" onclick="shardingtbPreView('-1')">&nbsp;&nbsp;&nbsp;&nbsp;预览&nbsp;&nbsp;&nbsp;&nbsp;</button>
+                                    <button type="button" class="btn btn-primary"
+                                            id="shardingtbSaveBtn" onclick="shardingtbSaveUpdateColumns()">&nbsp;&nbsp;&nbsp;&nbsp;保存&nbsp;&nbsp;&nbsp;&nbsp;</button>
+                                    <button type="button" class="btn btn-primary"
+                                            id="shardingtbBackBtn"
+                                            onclick="saveShardingSourceTBInfoBack()">
+                                        &nbsp;&nbsp;&nbsp;&nbsp;返回&nbsp;&nbsp;&nbsp;&nbsp;</button>
+                                    <button type="button" class="btn btn-primary"
+                                            onclick="shardingtbDel()">
+                                        &nbsp;&nbsp;&nbsp;&nbsp;删除&nbsp;&nbsp;&nbsp;&nbsp;</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!--/.row-->
+                <table id="shardingtbTable" data-toggle="table"
+                       data-show-refresh="false" data-show-toggle="true"
+                       data-show-columns="false" data-search="false"
+                       data-select-item-name="toolbar1" data-pagination="true"
+                       data-sort-name="name" data-sort-order="desc">
+                    <thead>
+                    <tr>
+                        <th data-field="id">ID</th>
+                        <th data-field="shardingTB">ShardingTB</th>
+                        <th data-field="isValid">状态</th>
+                        <th data-field="operUid">操作员</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<!--/.main-->
+
+<!-- <script src="js/jquery-1.11.1.min.js"></script> -->
+<script src="js/bootstrap.min.js"></script>
+<script src="js/easypiechart.js"></script>
+<script src="js/bootstrap-datepicker.js"></script>
+<script src="js/bootstrap-table.js"></script>
+<script src="js/custom.js"></script>
+<script src="js2/shardingtbselected.js"></script>
+<!-- //样式 -->
+
+<script
+        src="http://cdn.bootcss.com/bootstrap-table/1.9.1/bootstrap-table.min.js"></script>
+<!-- 国际化，表格汉化 -->
+<script
+        src="http://cdn.bootcss.com/bootstrap-table/1.9.1/locale/bootstrap-table-zh-CN.min.js"></script>
+</body>
+
+</html>

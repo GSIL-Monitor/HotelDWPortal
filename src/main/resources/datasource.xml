@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Datasources>
+	<!-- 数据库连接池属性配置 -->
+	<Datasource name="DWHTL_PublicDB_BIWR" testWhileIdle="false"
+		testOnBorrow="false" testOnReturn="false" validationQuery="SELECT 1"
+		validationInterval="30000" timeBetweenEvictionRunsMillis="5000"
+		maxActive="100" minIdle="1" maxWait="500" initialSize="1"
+		removeAbandonedTimeout="60" removeAbandoned="true" logAbandoned="true"
+		minEvictableIdleTimeMillis="30000" option="" />
+	<!--<Datasource name="DWHTL_TestPublicDB_BIWR" testWhileIdle="false"
+		testOnBorrow="false" testOnReturn="false" validationQuery="SELECT 1"
+		validationInterval="30000" timeBetweenEvictionRunsMillis="5000"
+		maxActive="100" minIdle="1" maxWait="500" initialSize="1"
+		removeAbandonedTimeout="60" removeAbandoned="true" logAbandoned="true"
+		minEvictableIdleTimeMillis="30000" option="" />-->
+</Datasources>

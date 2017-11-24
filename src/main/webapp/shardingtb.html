@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HotelDWPortal</title>
+<link
+		href="http://cdn.bootcss.com/bootstrap-table/1.9.1/bootstrap-table.min.css"
+		rel="stylesheet" />
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/datepicker3.css" rel="stylesheet">
+<link href="css/bootstrap-table.css" rel="stylesheet">
+<link href="css/styles.css" rel="stylesheet">
+<!-- slAjax pageAjax waiting -->
+<link href="css/processBar.css" rel="stylesheet">
+<!-- <script type="text/javascript" src="js/jquery-1.9.1.js"></script> -->
+<script type="text/javascript" src="js/My97DatePicker/WdatePicker.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="js/My97DatePicker/skin/whyGreen/datepicker.css" />
+<!-- select2 -->
+<link href="js/select2/css/select2.min.css" rel="stylesheet">
+<script type="text/javascript" src="js/jquery-2.1.0.js"></script>
+<script type="text/javascript" src="js/select2/js/select2.min.js"></script>
+<script type="text/javascript">
+	$('select').select2();
+</script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$(".js-example-basic-single").select2();
+	});
+</script>
+</head>
+
+<body>
+	<div class="col-sm-12 col-lg-12 main" id="mainDiv">
+		<input type="hidden" id="loginname" />
+		<div class="row">
+			<ol class="breadcrumb">
+				<li><a href="#"><span class="glyphicon glyphicon-home"></span></a></li>
+				<li class="active">ShardingTB源</li>
+			</ol>
+		</div>
+		<!--/.row-->
+		<div class="row" id="shardingtbShowDiv">
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<div class="row">
+							<div class="form-inline col-md-offset-1">
+								<div class="form-group">
+									<label>ShardingDB源</label> <select
+										class="form-control js-example-basic-single" id="srcDB">
+										<option selected="selected" value="">=====All=====</option>
+									</select>
+								</div>
+								<div class="form-group">
+									<label>ShardingTB源</label> <select
+										class="form-control js-example-basic-single" id="srcTB">
+										<option selected="selected" value="">=====All=====</option>
+									</select>
+								</div>
+								<div class="form-group">
+									<button type="button" class="btn btn-primary"
+										onclick="TBinitTable()">&nbsp;&nbsp;&nbsp;&nbsp;查询&nbsp;&nbsp;&nbsp;&nbsp;</button>
+									<button type="button" class="btn btn-primary"
+										onclick="addShardingSourceTB()">&nbsp;&nbsp;&nbsp;&nbsp;添加&nbsp;&nbsp;&nbsp;&nbsp;</button>
+								</div>
+							</div>
+						</div>
+						<!--/.row-->
+						<table id="cusTable" data-toggle="table" data-show-refresh="true"
+							data-show-toggle="true" data-show-columns="true"
+							data-search="true" data-select-item-name="toolbar1"
+							data-pagination="true" data-sort-name="name"
+							data-sort-order="desc">
+							<thead>
+								<tr>
+									<th data-field="id">ID</th>
+									<th data-field="sourceDB">ShardingDB源</th>
+									<th data-field="sourceTB">ShardingTB源</th>
+									<!--<th data-field="thresholdValue">校验阀值（K）</th>-->
+									<th data-field="targetDB">HIVE目标库</th>
+									<th data-field="targetTB">HIVE目标表</th>
+									<th data-field="comment">备注</th>
+									<th data-field="isValid">状态</th>
+									<th data-field="operUid">操作员</th>
+									<th data-field="operate">操作</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--/.row-->
+		<!--
+		<div class="row" id="shardingtbAddDiv">
+			<input type="hidden" id="addSourceTBID" />
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					<div class="panel-heading" id="titleDiv"></div>
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-md-11 form-inline col-md-offset-0">
+								<div class="form-group">
+									<label>ShardingTB前缀</label> <input class="form-control"
+										id="shardingPrefix" name="" placeholder=""/>
+								</div>
+								<div class="form-group">
+									<label>ShardingTB数量</label> <input class="form-control"
+										id="shardingNum" placeholder="" />
+								</div>
+								<div class="form-group">
+									<button type="button" class="btn btn-primary"
+										id="shardingtbViewBtn" onclick="shardingtbPreView('-1')">&nbsp;&nbsp;&nbsp;&nbsp;预览&nbsp;&nbsp;&nbsp;&nbsp;</button>
+									<button type="button" class="btn btn-primary"
+										id="shardingtbSaveBtn" onclick="shardingtbSave('-1')">&nbsp;&nbsp;&nbsp;&nbsp;保存&nbsp;&nbsp;&nbsp;&nbsp;</button>
+									<button type="button" class="btn btn-primary"
+										id="shardingtbBackBtn"
+										onclick="saveShardingSourceTBInfoBack()">&nbsp;&nbsp;&nbsp;&nbsp;返回&nbsp;&nbsp;&nbsp;&nbsp;</button>
+									<button type="button" class="btn btn-primary"
+										onclick="shardingtbDel()">&nbsp;&nbsp;&nbsp;&nbsp;删除&nbsp;&nbsp;&nbsp;&nbsp;</button>
+								</div>
+							</div>
+						</div>
+
+						<table id="shardingtbTable" data-toggle="table"
+							data-show-refresh="false" data-show-toggle="true"
+							data-show-columns="false" data-search="false"
+							data-select-item-name="toolbar1" data-pagination="true"
+							data-sort-name="name" data-sort-order="desc">
+							<thead>
+								<tr>
+									<th data-field="id">ID</th>
+									<th data-field="shardingTB">ShardingTB</th>
+									<th data-field="isValid">状态</th>
+									<th data-field="operUid">操作员</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		-->
+		<!--/.row-->
+		<div class="form-horizontal" id="shardingSourceTBInfoAddDiv">
+			<input type="hidden" id="shardingSourceDBID">
+			<input type="hidden" id="shardingSourceTBID">
+			<input type="hidden" id="updateType">
+			<div class="col-md-12">
+				<div class="panel panel-default">
+					<div class="panel-heading" id="titleDivForAdd"></div>
+					<div class="panel-body">
+						<div class="row">
+							<div class="form-group">
+								<label class="col-md-2 control-label">ShardingTB源</label>
+								<div class="col-md-10">
+									<input class="form-control" id="sourceTB" name=""
+										placeholder=""/>
+								</div>
+							</div>
+							<!--	<div class="form-group">
+                                    <label class="col-md-2 control-label">字段列表</label>
+                                    <div class="col-md-10">
+                                        <textarea class="form-control" id="columns" name=""
+                                            placeholder="请按此格式输入：
+    ColumnA,
+    ColumnB,
+    ColumnC,
+    ..."
+                                            rows="5"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">主键字段</label>
+                                    <div class="col-md-10">
+                                        <input class="form-control" id="pKColumns" name=""
+                                            placeholder="联合主键请用“,”分隔"/>
+                                    </div>
+                                </div>-->
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">取数条件</label>
+                                    <div class="col-md-10">
+                                        <textarea class="form-control" id="incrCondition" name=""
+                                            placeholder="" rows="5">#正常流程的条件（增量）
+Condition="DataChange_LastTime>='${zdt.addDay(-3).format("yyyy-MM-dd")}'"
+#初始化时的条件
+Condition="1=1"</textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">校验阀值（K）</label>
+                                    <div class="col-md-10">
+                                        <input class="form-control" id="thresholdValue" name=""
+                                            placeholder=""/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">HIVE目标库</label>
+                                    <div class="col-md-10">
+                                        <input class="form-control" id="targetDB" name=""
+                                            placeholder=""/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">HIVE目标表</label>
+                                    <div class="col-md-10">
+                                        <input class="form-control" id="targetTB" name=""
+                                            placeholder=""/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">备注</label>
+                                    <div class="col-md-10">
+                                        <textarea class="form-control" id="comment" name=""
+                                            placeholder="请输入备注..." rows="5"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group" id="isValidDiv">
+                                    <label class="col-md-2 control-label">是否有效</label>
+                                    <div class="col-md-10">
+                                        <select class="form-control" id="isValid">
+                                            <option value="T">有效</option>
+                                            <option value="F">无效</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label"></label>
+                                <div class="col-md-10 widget-right">
+                                    <button type="submit" class="btn btn-primary" id="adtbtn"
+                                        onclick="saveShardingSourceTBInfo();" value="">&nbsp;&nbsp;&nbsp;&nbsp;保存&nbsp;&nbsp;&nbsp;&nbsp;</button>
+                                    <button type="submit" class="btn btn-primary" id="backbtn"
+                                        onclick="saveShardingSourceTBInfoBack();" value="">&nbsp;&nbsp;&nbsp;&nbsp;返回&nbsp;&nbsp;&nbsp;&nbsp;</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!--/.row-->
+				</div>
+			</div>
+		</div>
+		<div class="form-horizontal" id="copyshardingScriptDiv">
+			<div class="col-md-12">
+				<div class="panel panel-default">
+					<div class="panel-heading" id="titleDivForCode"></div>
+					<div class="panel-body">
+						<div class="row">
+							<div class="form-group">
+								<label class="col-md-2 control-label">创建中间表脚本</label>
+								<div class="col-md-10">
+									<textarea class="form-control" id="createMidtargettbScript" name=""
+											  placeholder="" rows="10" readonly="readonly"></textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-md-2 control-label"></label>
+								<div class="col-md-10 widget-right">
+									<button type="submit" class="btn btn-primary" id="copybtn3"
+											onclick="copyShardingScriptInfo(3);" value="">&nbsp;&nbsp;&nbsp;&nbsp;复制&nbsp;&nbsp;&nbsp;&nbsp;</button>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-md-2 control-label">创建结果表脚本</label>
+								<div class="col-md-10">
+									<textarea class="form-control" id="createtargettbScript" name=""
+											  placeholder="" rows="10" readonly="readonly"></textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-md-2 control-label"></label>
+								<div class="col-md-10 widget-right">
+									<button type="submit" class="btn btn-primary" id="copybtn2"
+											onclick="copyShardingScriptInfo(2);" value="">&nbsp;&nbsp;&nbsp;&nbsp;复制&nbsp;&nbsp;&nbsp;&nbsp;</button>
+									<button type="submit" class="btn btn-primary" id="opendatax"
+											onclick="opendataxcreatetable();" value="">&nbsp;&nbsp;&nbsp;&nbsp;建表&nbsp;&nbsp;&nbsp;&nbsp;</button>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-md-2 control-label">Sharding脚本</label>
+								<div class="col-md-10">
+									<textarea class="form-control" id="shardingScript" name=""
+										placeholder="" rows="10" readonly="readonly"></textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-md-2 control-label"></label>
+								<div class="col-md-10 widget-right">
+									<button type="submit" class="btn btn-primary" id="copybtn1"
+										onclick="copyShardingScriptInfo(1);" value="">&nbsp;&nbsp;&nbsp;&nbsp;复制&nbsp;&nbsp;&nbsp;&nbsp;</button>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-md-2 control-label">合并脚本</label>
+								<div class="col-md-10">
+									<textarea class="form-control" id="shardingCombScript" name=""
+										placeholder="" rows="10" readonly="readonly"></textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-md-2 control-label"></label>
+								<div class="col-md-10 widget-right">
+									<button type="submit" class="btn btn-primary" id="copybtn-1"
+										onclick="copyShardingScriptInfo(-1);" value="">&nbsp;&nbsp;&nbsp;&nbsp;复制&nbsp;&nbsp;&nbsp;&nbsp;</button>
+									<button type="submit" class="btn btn-primary" id="copybackbtn"
+										onclick="saveShardingSourceTBInfoBack();" value="">&nbsp;&nbsp;&nbsp;&nbsp;返回&nbsp;&nbsp;&nbsp;&nbsp;</button>
+								</div>
+							</div>
+						</div>
+						<!--/.row-->
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--/.row-->
+	</div>
+	<!--/.main-->
+
+	<!-- <script src="js/jquery-1.11.1.min.js"></script> -->
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/easypiechart.js"></script>
+	<script src="js/bootstrap-datepicker.js"></script>
+	<script src="js/bootstrap-table.js"></script>
+	<script src="js/custom.js"></script>
+	<script src="js2/shardingtb.js"></script>
+	<!-- //样式 -->
+	
+	<script
+		src="http://cdn.bootcss.com/bootstrap-table/1.9.1/bootstrap-table.min.js"></script>
+	<!-- 国际化，表格汉化 -->
+	<script
+		src="http://cdn.bootcss.com/bootstrap-table/1.9.1/locale/bootstrap-table-zh-CN.min.js"></script>
+</body>
+
+</html>

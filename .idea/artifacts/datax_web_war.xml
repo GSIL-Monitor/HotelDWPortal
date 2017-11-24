@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="datax-web:war">
+    <output-path>E:/idea-project/datax-web-master-914351280880037a5eeb8c1ca80fd015749d4f6b/target</output-path>
+    <root id="archive" name="datax-web.war">
+      <element id="artifact" artifact-name="datax-web:war exploded" />
+    </root>
+  </artifact>
+</component>
